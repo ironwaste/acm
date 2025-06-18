@@ -1,0 +1,68 @@
+{
+	// Place your 全局 snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"Print to console":{
+		"scope":"c++,cpp",
+		"prefix" : "acm",
+		"body" :[
+			"// 看什么看,以为我厉害吗？",
+			"// 我只是戾气很重,不厉害只需要114514分钟就能变厉害了",
+			"// 而你我的朋友只需要2.5年就可以了",
+			"#include<bits/stdc++.h>",
+            "#include<climits>",
+            "\n",
+            "#define all(x) x.begin(),x.end()",
+            "#define pb(x) push_back(x)",
+            "#define i64 long long",
+            "#define fi first",
+            "#define se second\n",
+            "#define endl '\\n'",
+            "#define mod3 998244353",
+            "#define mod7 1000000007",
+            "#define de(x) cerr << #x <<\" \"<<x <<\" \";",
+            "#define deb(x) cerr << #x <<\" \"<<x <<endl;",
+            "using namespace std;\n",
+			
+			"using pii = pair<int,int>;",
+			"using pll = pair<i64, i64>;\n",
+            "\nvoid solve(){\n\n}\n",
+            "int main(){",
+			"	ios_base::sync_with_stdio(false);",
+			"	cin.tie(nullptr);",
+			"	cout.tie(nullptr);",
+            "    int T = 1;",
+            // "    cin >> T;",
+            "    while(T--){",
+            "        solve();",
+            "    }",
+            "    return 0;",
+            "}",
+			//"// 做题补题步骤：(注意范围数组大小和元素最大值的区分)"
+			// "// 1、先思考10分钟,如果得出思路，直接写代码"
+			// "// 2、否则先进行思考15到20分钟,如果还是没思路步骤三"
+			// "// 3、先将已经有的题目信息进行归纳总结用文字的方式大出来"
+			// "// 4、再将自己所想到的隐含条件或者已经归纳出来的规律写明"
+			// "// 5、如果依然没有思路则去看答案代码,如果看懂大概思路,关闭自己写"
+			// "// 6、卡住的地方自己再思考5分钟,如果不行则再去看代码"
+			
+
+		],
+		// "describe" : "include",
+
+	},
+
+}
