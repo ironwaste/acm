@@ -4,6 +4,7 @@
         "*.cpp": "cpp",
         "list": "cpp",
         "xutility": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "iostream": "cpp"
     }
 }
