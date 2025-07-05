@@ -38,9 +38,6 @@ void solve(){
         }
     }
     cout << ((ok) ? "Yes" : "No" )<< endl;
-
-
-
 }
 
 int main(){
