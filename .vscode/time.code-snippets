@@ -1,0 +1,11 @@
+        
+{
+    "Printf to console":{
+        "scope":"c++,cpp",
+        "prefix":"remedy",
+        "body":[
+            "// ${CURRENT_YEAR}.${CURRENT_MONTH}.${CURRENT_DATE}——${CURRENT_HOUR}:${CURRENT_MINUTE}:${CURRENT_SECOND}",
+        ],
+
+    }
+}

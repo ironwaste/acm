@@ -41,7 +41,7 @@
 			"using namespace std;",
 			"using pii = pair<int,int>;",
 			"using pll = pair<i64, i64>;\n",
-
+            "// ${CURRENT_YEAR}.${CURRENT_MONTH}.${CURRENT_DATE}——${CURRENT_HOUR}:${CURRENT_MINUTE}:${CURRENT_SECOND}",
 			"",
 			"int main(){",
 			"",
