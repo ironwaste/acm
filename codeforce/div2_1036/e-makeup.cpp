@@ -16,9 +16,9 @@
 using namespace std;
 
 
-// 补题——题目链接:
-// 网址：
-// 2025.07.07——02:45:51
+// 补题——题目链接: https://codeforces.com/contest/2124/problem/E
+// 网址：https://codeforces.com/blog/entry/144382
+// 2025.07.07——02:46:32
 
 void solve(){
 
