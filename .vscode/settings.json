@@ -10,7 +10,6 @@
         "string": "cpp",
         "xstring": "cpp",
         "array": "cpp",
-        "deque": "cpp",
         "initializer_list": "cpp",
         "queue": "cpp",
         "utility": "cpp",
@@ -18,6 +17,7 @@
         "xhash": "cpp",
         "xtree": "cpp",
         "ios": "cpp",
-        "tuple": "cpp"
+        "tuple": "cpp",
+        "numeric": "cpp"
     }
 }
