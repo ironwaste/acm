@@ -16,6 +16,7 @@
             "#define endl '\\n'",
             "#define mod3 998244353",
             "#define mod7 1000000007",
+            "#define all(x) x.begin(),x.end()",
             "#define de(x) cerr << #x <<\" \"<<x <<\" \";",
             "#define deb(x) cerr << #x <<\" \"<<x <<endl;",
             "using namespace std;\n",

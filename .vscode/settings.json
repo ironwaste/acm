@@ -18,6 +18,10 @@
         "xtree": "cpp",
         "ios": "cpp",
         "tuple": "cpp",
-        "numeric": "cpp"
+        "numeric": "cpp",
+        "xiosbase": "cpp",
+        "algorithm": "cpp",
+        "limits": "cpp",
+        "iterator": "cpp"
     }
 }

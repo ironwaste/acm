@@ -3,7 +3,7 @@
 #include <bits/stdc++.h>
 #define ll long long
 #define ull unsigned long long
-
+#define i64 long long
 const ll INF = 0x7FFFFFFFFFFFFFFF;
 const ll MOD = 998244353;
 using namespace std;
@@ -45,56 +45,74 @@ inline ll read(){
 }
 
 void solve() {
-	__int128 p = read(), a = read(), b = read();
-	__int128 q = read(), c = read(), d = read();
-	ull m = read(), t = read();
-	__int128 now = 0;
-	__int128 x = m / p;
-	if (m < p) {
-		cout << m << endl;
-		return;
+	i64 n, m;
+	cin >> n >> m;
+	vector<i64>a(2 * n + 1);
+	for (int i = 1;i <= 2 * n;i++) {
+		cin >> a[i];
+		a[i+n] = a[i];
 	}
-	while (1) {
-//		cout << x << " " << m << " " << now << endl;
-		__int128 shang = p * (x + 1) - m;
-		if (shang <= 0) {
-			x = m / p;
-			continue;
-		}
-		__int128 xia = x * (q - p);
-		__int128 duoshao = shang / xia + (shang % xia ? 1 : 0);
-		if (now + duoshao * (x * (a + c) + b + d) > t) break;
-		now += duoshao * (x * (a + c) + b + d);
-		m += duoshao * (q - p) * x;
-		x++;
-	}
-	__int128 shengyu = t - now; 
-	if (shengyu <= 0) {
-		cout << m << endl;
-		return;
-	}
-	ll l = 0; ll r = 1e18; 
-	ll ans = 1e18; 
-	while (l <= r) {
-		ll mid = l + (r - l) / 2;
-		if (mid * (a + c) + (mid / x + (mid % x ? 1 : 0)) * (b + d)> shengyu) {
-			r = mid - 1;
-			ans = mid;
-		} 
-		else { 
-			l = mid + 1;
+	i64 ans = 0;
+	for (int i = 1;i <= n;i ++) {
+		if (a[i] == 0) {
+			i64 cnt0 = 1;
+			while (a[i + 1] == 0 && i <= n) {
+				i++;
+				cnt0++;
+			}
+			i64 mi = 0;
+			for (int j = i;j <= i + n;j++) {
+				if (mi + 1 <= a[j]) {
+					mi = max(mi,a[j]);
+				} else {
+					break;
+				}
+			}
+			if (mi == m - 1) { ans += cnt0; }
+
 		}
 	}
-	cout << (ll)(ans - 1) * (ll)(q - p) + (ll)m << endl;
-	return;
+	cout << ans << endl;
+
 }
 
 int main() {
 	// __int128 T;
 	// T = read();
-	int T = 1;
-	while (T--) {
-		solve();
-	}
+	// std::ios::sync_with_stdio(false);
+    // std::cin.tie(nullptr);
+     
+    int n, m;
+    std::cin >> n >> m;
+ 
+    std::vector<int> a(n);
+    for (auto &x: a) {
+        std::cin >> x;
+    }
+    a.insert(a.end(), a.begin(), a.end());
+ 
+    std::vector<int> pos(m);
+    std::iota(pos.rbegin(), pos.rend(), 2 * n);
+ 
+    int ans = 0;
+    for (int i = 2 * n - 2, cnt = m - 1; i >= 0; i--) {
+        int v = a[i];
+        if (v > 0 and pos[v - 1] < pos[v]) {
+            cnt++;
+        }
+        if (v + 1 < m and pos[v] > pos[v + 1]) {
+            cnt--;
+        }
+        if (i < n and cnt == 0) {
+            ans++;
+        }
+        pos[v] = i;
+    }
+    std::cout << ans << "\n";
+     
+	// int T = 1;
+	// while (T--) {
+	// 	solve();
+	// }
 	return 0;
 }

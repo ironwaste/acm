@@ -21,38 +21,77 @@ using namespace std;
 using pii = pair<int,int>;
 using pll = pair<i64, i64>;
 
-const i64 ck = 1e9;
+const i64 ck = 5;
 i64 Rand(i64 mod) {
 
-    i64 ans = LLONG_MAX/40000;
+    i64 ans = LLONG_MAX/40000LL;
     // rand() -> [0, 2 ^ 16 - 1 ( 32767 )];
     return ans = (ans * rand()) % mod + 1;
 }
 i64 Rand0(i64 mod) {
 
-    i64 ans = LLONG_MAX/40000;
+    i64 ans = LLONG_MAX/40000LL;
     // rand() -> [0, 2 ^ 16 - 1 ( 32767 )];
     return ans = (ans * rand()) % (mod + 1);
 }
 
-int main(){
+// auto gen = [&](i64 i) -> void {
+    // for (int i = 0;i < n;i ++) {
+    // p = Rand(ck), a = Rand(ck), b = Rand0(ck);
+    // q = Rand(ck), c = Rand(ck), d = Rand0(ck);
+    // m = Rand(ck), t = Rand(ck);
+    // };
+// printf("%lld %lld %lld %lld %lld %lld %lld %lld \n", p, a, b, q, c, d, m, t);
+// struct _timeb T;
+// _ftime(&T);
+// srand(T.millitm);
+
+
+/*
+random_shuffle()
+std::default_random_engine(seed)
+用于打乱数组顺序
+*/
+int main() {
 
     struct _timeb T;
 
     _ftime(&T);
+    /* 更改随机种子 */
     srand(T.millitm);
+
+    // shuffle 专属种子生成器
+    // unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    // std::default_random_engine generator(seed);
+
+
     // cout << ck << endl;
-    i64 p, a, b, c, d, q, m, t;
-    auto gen = [&]() -> void {
-        p = Rand(ck), a = Rand(ck), b = Rand0(ck);
-        q = Rand(ck), c = Rand(ck), d = Rand0(ck);
-        m = Rand(ck), t = Rand(ck);
+    i64 p, b, c, d, q, m, t;
+    i64 n = 10;
+    vector<i64>a(n,0);
+    // vector<i64>choose();
+    auto gen = [&]() -> bool {
+        m = Rand0(n);
+        vector<i64>choose(m,0);
+        iota(all(choose), 0);
+        for (i64 i = 0;i < m;i++) {
+            a[i] = choose[i];
+        }
+        for (int i = m;i < n;i++) {
+            a[i] = Rand0(m-1LL);
+        }
+        shuffle(a.begin(), a.end(), std::default_random_engine(seed));
+        return true;
         };
-    gen();
-    while(p >= q) {
-        gen();
+    while (!gen()) {
     }
-    printf("%lld %lld %lld %lld %lld %lld %lld %lld \n", p, a, b, q, c, d, m, t);
+
+    printf("%lld %lld\n", n, m);
+    for (i64 i = 0;i < n;i ++) {
+        printf("%lld ",a[i]);
+    }printf("\n");
+
 
     return 0;
 }
