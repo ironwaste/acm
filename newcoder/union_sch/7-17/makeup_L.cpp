@@ -94,9 +94,17 @@ using pll = pair<i64, i64>;
  * 1 2 3 4 5 6
  * [1,2][2,3][3,4][4,5][5,6][6,1] n种
  * [1,4][2,5][3,6][4,1][5,2][6,3] 就需要除以2了
+ * [1,6][2,1][3,2][][][][][] 和差值为1 的完全重复了
  * 就是n/2种类而非n种；
  * 可以直接求长度距离内有多少个奇数即可，然后将总数除以2 即可
- * (n/2 * n)/2 
+ * (n/2 * n)/2
+ *
+ * 1 2 3 4 5 6 7 8 n = 8的情况下呢?
+ * 1《==》[1,2][2,3][3,4][4,5][5,6][6,7][7,8][8,1]
+ * 3《==》[1,4][2,5][3,6][4,7][5,8][6,1][7,2][8,3]
+ * 5《==》[1,6][2,7][3,8][4,1][5,2][6,3][7,4][8,5] 重复了奇数个数 * n
+ * 7《==》[1,8][][][][][][][][][] 重复了
+ * 
  */
 i64 pw(i64 a, i64 b) {
     i64 res = 1LL;
@@ -134,7 +142,7 @@ void solve() {
         };
         
     for (int i = 1;i <= n;i++) { uni(a[i], i); }
-
+    i64 cir_two = 0;
     vector<i64>cir_odd, cir_even,vis(n+1,0);
     for (i64 i = 1;i <= n;i++) {
         i64 nx = fd(fd, i);
@@ -145,6 +153,9 @@ void solve() {
             cir_odd.push_back(v);
         } else {
             cir_even.push_back(v);
+            if (v == 2LL) {
+                cir_two++;
+            }
         }
     }
     i64 even_sz = cir_even.size(),odd_size = cir_odd.size();
@@ -153,16 +164,19 @@ void solve() {
         return;
     }
     if (odd_size == 2) {
-        cout << pw(2, even_sz) * cir_odd[0] % mod3 * cir_odd[1] % mod3 << endl;
+        cout << pw(2, (even_sz-cir_two)) * cir_odd[0] % mod3 * cir_odd[1] % mod3 << endl;
         return ;
     }
-    i64 sum = pw(2, even_sz) % mod3;
+    i64 sum = pw(2, even_sz-cir_two) % mod3;
     i64 ans = 0LL;
     for (int i = 0;i < even_sz;i++) {
         i64 v = cir_even[i];
-        (ans += sum * inv(2LL) % mod3 * (v/2*v/2) %mod3) %= mod3;
+        if (v == 2LL) {
+            (ans += sum) %= mod3;
+        }
+        // i64 k = (v / 2LL) * v / 2LL;
+        (ans += (sum * inv(2LL) % mod3 * (v / 2LL * v / 2LL) % mod3) % mod3) %= mod3;
     }
-
     cout << ans << endl;
 }
 // 2025.07.17——22:01:39 wa 43.9
