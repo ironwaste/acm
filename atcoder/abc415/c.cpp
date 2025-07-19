@@ -21,39 +21,44 @@ using namespace std;
 using pii = pair<int,int>;
 using pll = pair<i64, i64>;
 
+// 2025.07.19——20:15:13
+/*
+ *
+ *
+ *
+*/
+
 void solve() {
-    i64 n, qq;
-    map<i64, i64>cnt;
-    cin >> n >> qq;
-    vector<i64>a(n);
-    for (auto& x : a) { cin >> x;cnt[x]++; } // n
-    while (qq--) {
-        i64 p, v;
-        cin >> p >> v;
-        p--;
-        a[p] = a[p] + v;
-        auto b = a;
-        sort(all(b));
-        i64 mid = b[(n + 1LL) / 2];
-        // deb(mid);
-        i64 ans = lower_bound(all(b), mid) - b.begin();
-        // i64 ans = mi_id;
-        // deb(ans);
-        cout << ans << endl;
-        // i64 mid = b[mi_id],ans = b[mi_id - 1];
-        // cout << mi_id << endl;
-        
+    i64 n;
+    cin >> n;
+    string s;
+    cin >> s;
+    i64 sum = (1LL << n) - 1LL;
+    if (s[sum - 1] == '1') {
+        cout << "No\n";return;
     }
+    vector<i64>dp(sum + 10LL,0);
+    dp[sum] = 1;
+    for (i64 i = sum;i;i--) {
+        if (!dp[i])continue;
+        for (i64 j = 0;j < 18;j++) {
+            i64 v = i -(1LL << j);
+            if (((i >> j) & 1LL )&& s[v - 1] != '1') {
+                dp[i - (1LL << j)] = 1;
+            }
+        }
+    }
+
+    cout << ((dp[0]) ? "Yes\n" : "No\n");
 }
+// 2025.07.19——21:11:40
 
-// 2025.07.19——21:09:59 TLE4回合，对于阶乘和指数幂时间复杂度搞错了
-
-int main() {
+int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     cout.tie(nullptr);
     int T = 1;
-    // cin >> T;
+    cin >> T;
     while(T--){
         solve();
     }
