@@ -23,6 +23,8 @@
         "algorithm": "cpp",
         "limits": "cpp",
         "iterator": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "chrono": "cpp",
+        "forward_list": "cpp"
     }
 }
