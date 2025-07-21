@@ -21,39 +21,38 @@ using namespace std;
 using pii = pair<int,int>;
 using pll = pair<i64, i64>;
 
-void solve() {
-    i64 n, qq;
-    map<i64, i64>cnt;
-    cin >> n >> qq;
-    vector<i64>a(n);
-    for (auto& x : a) { cin >> x;cnt[x]++; } // n
-    while (qq--) {
-        i64 p, v;
-        cin >> p >> v;
-        p--;
-        a[p] = a[p] + v;
-        auto b = a;
-        sort(all(b));
-        i64 mid = b[(n + 1LL) / 2];
-        // deb(mid);
-        i64 ans = lower_bound(all(b), mid) - b.begin();
-        // i64 ans = mi_id;
-        // deb(ans);
-        cout << ans << endl;
-        // i64 mid = b[mi_id],ans = b[mi_id - 1];
-        // cout << mi_id << endl;
+// 2025.07.19——20:11:29
+/*
+ *
+ *
+ *
+*/
+
+void solve(){
+    string s;
+    cin >> s;
+    i64 n = s.size();
+    i64 cnt = 0;
+    for (int i = 0;i < n;i++) {
+        if (cnt == 0 && s[i] == '#') {
+            cnt = i + 1;
+        } else if (s[i] == '#') {
+            cout << cnt << "," << i + 1LL << endl;
+            cnt = 0;
+        }
         
     }
+
+
+
 }
-
-// 2025.07.19——21:09:59 TLE4回合，对于阶乘和指数幂时间复杂度搞错了
-
-int main() {
+// 2025.07.19——20:15:08 accpted
+int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     cout.tie(nullptr);
     int T = 1;
-    // cin >> T;
+    //cin >> T;
     while(T--){
         solve();
     }

@@ -26,6 +26,8 @@
         "map": "cpp",
         "forward_list": "cpp",
         "string_view": "cpp",
-        "span": "cpp"
+        "span": "cpp",
+        "chrono": "cpp",
+        "forward_list": "cpp"
     }
 }
