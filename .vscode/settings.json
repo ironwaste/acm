@@ -28,6 +28,5 @@
         "string_view": "cpp",
         "span": "cpp",
         "chrono": "cpp",
-        "forward_list": "cpp"
     }
 }
