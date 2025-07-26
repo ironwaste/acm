@@ -28,5 +28,6 @@
         "string_view": "cpp",
         "span": "cpp",
         "chrono": "cpp",
+        "xlocale": "cpp"
     }
 }

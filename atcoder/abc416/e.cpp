@@ -21,20 +21,14 @@ using namespace std;
 using pii = pair<int,int>;
 using pll = pair<i64, i64>;
 
-// 2025.07.25——21:52:33
-/* https://www.luogu.com.cn/problem/P3379
- * 由于上一个版本TLE 所以重新复写一下，之前只是普通版仅仅标记了树的分叉
- * 并且对于树的分叉的不同子树进行不同的标注，一个是标注了其本身为top点，
- * 并且记录了其父亲节点，以实现标注为自己的节点能正常向祖先找节点，
- * 另外一个是直接标记为 其分支节点
+// 2025.07.26——21:51:43
+/*
  *
- * 但是由于可能存在全部都是一个子树特别长的情况，重复出现，导致的超时。
+ *
+ *
 */
 
 void solve(){
-    
-
-
 
 }
 
@@ -42,8 +36,8 @@ int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     cout.tie(nullptr);
-    int T = 1;
-    //cin >> T;
+    int T;
+    cin >> T;
     while(T--){
         solve();
     }
