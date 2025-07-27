@@ -116,19 +116,10 @@ void solve() {
         g[v].push_back(u);
     }
     root = 1;
-    fa[root] = root;
     dfsi(root, 1);
     treedec(root, root);
     prefix[root] = hg[root];
     dfspre(root);
-    
-    // for (int i = 0;i <= n;i ++) {
-    //     de(i)deb(prefix[i]);
-    // }
-    
-    // for (int i = 0;i <= n;i ++) {
-    //     de(i)de(fa[i])deb(top[i]);
-    // }
 
     string ans = "";
     while (m--) {
@@ -138,8 +129,6 @@ void solve() {
         i64 w = HG(c),lc = lca(x,y);
         w1 = querydep(x, y, lc);
         w2 = query(x, y, lc);
-        // cout << lc << endl;
-        // de(w1)de(w2)de(lc)deb(w)
         if ( (w2 > 0 && w == 1) || (w2 < w1 && w == 0) ) {
             ans += '1';
         } else {
