@@ -108,11 +108,7 @@ void solve() {
         i64 x, y;
         cin >> x >> y;
         cout << lca(x, y) << endl;
-
     }
-
-
-
 }
 
 int main(){
