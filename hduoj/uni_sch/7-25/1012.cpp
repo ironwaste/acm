@@ -37,7 +37,7 @@ struct ModInt {
         if (x < 0) x += MOD;
     }
 
-    ModInt<MOD> qmi(i64 k) {
+    ModInt<MOD> pw(i64 k) {
         ModInt<MOD> res = 1;
         ModInt a = *this;
         while (k) {
