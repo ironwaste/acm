@@ -86,8 +86,11 @@ void upd(i64 l, i64 r, i64 c, i64 s, i64 t, i64 p) {
     if(l <= mid)upd(l, r, c, s, mid, 2 * p);
     if (r > mid) upd(l, r, c, mid + 1LL, t, 2 * p + 1LL);
     seg[p] = seg[2 * p] + seg[2 * p + 1];
+    // 这个代码 不能够放在两个递归循环之前
+    // 因为放在 之前的话，最后一位在l r 区间内的加和就没有被计算到这一次p之中了
+    
 }
-
+// 带有懒惰标记的 求和
 i64 gsum(i64 l,i64 r,i64 s,i64 t,i64 p) {
 
     if (l <= s && t <= r) { return seg[p]; }
