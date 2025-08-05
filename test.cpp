@@ -2,12 +2,15 @@
 using namespace std;
 
 int main() {
-    vector<int>a(10, 0);
-    iota(a.begin(),a.end(), 0);
-    int x = 10;
-    int upid = lower_bound(a.begin(),a.end(), x) - a.begin();
-    cout << upid << "  " << a[upid]<< endl;
-
+    // vector<int>a(10, 0);
+    // iota(a.begin(),a.end(), 0);
+    // int x = 10;
+    // int upid = lower_bound(a.begin(),a.end(), x) - a.begin();
+    // cout << upid << "  " << a[upid]<< endl;
+    vector<int>a(10);
+    for (auto x : a) {
+        cout << x << " ";
+    }
 
     
     // cout << "llong_max is : " << LLONG_MAX << endl;

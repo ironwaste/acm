@@ -28,6 +28,14 @@
         "string_view": "cpp",
         "span": "cpp",
         "chrono": "cpp",
-        "xlocale": "cpp"
+        "xlocale": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "format": "cpp",
+        "generator": "cpp",
+        "ranges": "cpp",
+        "stacktrace": "cpp",
+        "text_encoding": "cpp",
+        "regex": "cpp"
     }
 }
