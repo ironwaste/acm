@@ -22,7 +22,7 @@ using pii = pair<int,int>;
 using pll = pair<i64, i64>;
 
 // 2025.08.05——10:41:54
-// 2025.08.07——00:22:04 
+// 2025.08.07——00:22:04 accpted
 /* https://www.luogu.com.cn/problem/P3384
  * 树链剖分模板题 ：
  * 四种操作：
