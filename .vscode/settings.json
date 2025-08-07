@@ -36,6 +36,17 @@
         "ranges": "cpp",
         "stacktrace": "cpp",
         "text_encoding": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "exception": "cpp",
+        "fstream": "cpp",
+        "functional": "cpp",
+        "istream": "cpp",
+        "memory": "cpp",
+        "optional": "cpp",
+        "set": "cpp",
+        "sstream": "cpp",
+        "stop_token": "cpp",
+        "streambuf": "cpp",
+        "thread": "cpp"
     }
 }
