@@ -34,32 +34,53 @@ i64 equal(char a, char b) {
 }
 
 void solve() {
-    int n;
+    i64 n;
     cin >> n;
     string a, b;
     cin >> a >> b;
-    i64 cnt0 = 0, cnt1 = 0;
-    i64 ans = 0;
-    for (i64 i = 0;i < n;i++) {
-        if (a[i] == '0') {cnt0++;} else {cnt1++;}
-        if (b[i] == '0') {cnt0++;} else {cnt1++;}
-        ans += min(cnt1, cnt0);
-        if (i != 0) {
-            if (equal(a[i],a[i-1])) {
-                ans += i * min(cnt1, cnt0);
-            } else {
-                ans += i * (min(cnt1, cnt0) - 1);
-            }
-            if (equal(b[i] ,b[i-1])) {
-                ans += i * min(cnt1, cnt0);
-            } else {
-                ans += i * (min(cnt1, cnt0) - 1);
-            }
+    // i64 cnt0 = 0, cnt1 = 0;
+    vector<pll>x(n, { 0,0 }), y(n, { 0,0 });
+    vector<i64>tmpx(n, 0), tmpy(n, 0);
+    i64 ans = n * n * (n + 1);
+    for (int i = 0;i < n;i++) {
+        if (i) {
+            x[i] = x[i - 1];
+            y[i] = y[i - 1];
         }
+        if (a[i] == '0') { x[i].fi++; } else { x[i].se++; }
 
+        if (b[i] == '0') { y[i].fi++; } else { y[i].se++; }
+
+        tmpx[i] = x[i].fi - x[i].se;
+        tmpy[i] = y[i].se - y[i].fi;
     }
-
-    cout << ans << endl;
+    // ans = ans * (1 + n) * n / 2;
+    // deb(ans);
+    sort(all(tmpx));
+    sort(all(tmpy));
+    // for (auto x : tmpx) {
+    //     de(x);
+    // }cout << endl;
+    // for (auto y : tmpy) {
+    //     de(y);
+    // }cout << endl;
+    i64 cntans = 0;
+    for (int i = 0;i < n;i++) {
+        i64 v = tmpx[i];
+        i64 pos = upper_bound(all(tmpy), v) - tmpy.begin();
+        // lower_bound 和 upper_bound 的位置还是不确定，不熟悉
+        cntans += pos * v;
+        cntans -= (n-pos) * v;
+        // de(v)de(pos);
+        v = tmpy[i];
+        pos = lower_bound(all(tmpx), v) - tmpx.begin();
+        // de(v)deb(pos);
+        cntans += pos * v;
+        cntans -= (n - pos) * v;
+    }
+    // cntans /= 2;
+    // de(ans)deb(cntans)
+    cout << (ans - cntans) / 2 << endl;
 }
 int main(){
     ios_base::sync_with_stdio(false);
