@@ -13,32 +13,10 @@ int main() {
     // for (auto x : a) {
     //     cout << x << " ";
     // }
+    int a = 1, b = 2, c = 4, d = 11;
 
-    int m;
-    cin >> m;
-    // int s = m;
-    // while (s > 0) {
-        // deb(s);
-        // int k = s;
-    auto l2 = [&](int k)->void {
-        de(k)
-        while (k) {
-                cout << k % 2 << " ";
-                k /= 2;
-            }cout << endl;
-            };
-        
-    //     s = (s - 1) & m;
-    // }
-    for (int i = 1;i < (1 << m);++i) {
-        deb(i);
-        l2(i);
-        int s = i;
-        for (;s>0;s = (s - 1) & i) {
-            de(s);
-            l2(s);
-        }cout << endl;
-    }
+    
+
     // cout << "llong_max is : " << LLONG_MAX << endl;
     // cout << INT_MAX << endl;
     // cout << (2LL << 30) << endl;
