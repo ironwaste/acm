@@ -11,11 +11,13 @@ int main()
     rodents++;
     cout << "rats = " << rats;
     cout << ", rodents = " << rodents << endl;
-
+    swap(rats, rodents);
 // some implementations require type casting the following
 // addresses to type unsigned
     cout << "rats address = " << &rats;
     cout << ", rodents address = " << &rodents << endl;
+
+    
     // cin.get();
     return 0; 
 }

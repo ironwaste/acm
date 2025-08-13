@@ -20,7 +20,7 @@ using namespace std;
 
 using pii = pair<int,int>;
 using pll = pair<i64, i64>;
-
+const i64 N = 1e12 ;
 const i64 ck = 5;
 i64 Rand(i64 mod) {
 
@@ -68,29 +68,23 @@ int main() {
 
     // cout << ck << endl;
     i64 p, b, c, d, q, m, t;
-    i64 n = 10;
-    vector<i64>a(n,0);
+    i64 n ,w;
+    // vector<i64>a(n,0);
     // vector<i64>choose();
     auto gen = [&]() -> bool {
-        m = Rand0(n);
-        vector<i64>choose(m,0);
-        iota(all(choose), 0);
-        for (i64 i = 0;i < m;i++) {
-            a[i] = choose[i];
-        }
-        for (int i = m;i < n;i++) {
-            a[i] = Rand0(m-1LL);
-        }
-        shuffle(a.begin(), a.end(), std::default_random_engine(seed));
+        n = Rand(N);
+        w = Rand(n);
         return true;
         };
+
+    
     while (!gen()) {
     }
 
-    printf("%lld %lld\n", n, m);
-    for (i64 i = 0;i < n;i ++) {
-        printf("%lld ",a[i]);
-    }printf("\n");
+    printf("%lld %lld\n", n, w);
+    // for (i64 i = 0;i < n;i ++) {
+    //     printf("%lld ",a[i]);
+    // }printf("\n");
 
 
     return 0;

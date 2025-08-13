@@ -1,118 +1,80 @@
-// ?????? 24? ???
-
 #include <bits/stdc++.h>
-#define ll long long
-#define ull unsigned long long
-#define i64 long long
-const ll INF = 0x7FFFFFFFFFFFFFFF;
-const ll MOD = 998244353;
+#define dg(x) std::cout << #x << ": " << x << "\n"
 using namespace std;
-
-template<const ll MOD>
-struct ModInt{
-    ll x;
-    ModInt(ll n = 0){ x = n;}
-    ModInt<MOD> qmi(ll k){
-        ModInt<MOD> res = 1;
-        ModInt a = *this;
-        while (k){
-            if (k&1) (res.x *= a.x) %= MOD;
-            (a.x *= a.x) %= MOD;
-            k /= 2;
-        }
-        return res;
+using i64 = long long;
+using i128 = __int128_t;
+const i64 mod = 998244353;
+void print(i128 x) {
+    if (x < 0) {
+        putchar('-');
+        x = -x;
     }
-    ModInt<MOD> inv(){ ModInt<MOD> a = *this; return a.qmi(MOD-2);}
-    ModInt<MOD> friend operator+(ModInt<MOD> a,ModInt<MOD> b){ return (a.x + b.x) % MOD;}
-    ModInt<MOD> friend operator-(ModInt<MOD> a,ModInt<MOD> b){ return (a.x - b.x + MOD) % MOD;}
-    ModInt<MOD> friend operator*(ModInt<MOD> a,ModInt<MOD> b){ return a.x % MOD * b.x % MOD;}
-    ModInt<MOD> friend operator/(ModInt<MOD> a,ModInt<MOD> b){ return a * b.inv();}
-    ModInt<MOD> friend operator<=(ModInt<MOD> a,ModInt<MOD> b){ return a.x <= b.x;}
-    ModInt<MOD> friend operator<(ModInt<MOD> a,ModInt<MOD> b){ return a.x < b.x;}
-    ModInt<MOD> friend operator>=(ModInt<MOD> a,ModInt<MOD> b){ return a.x >= b.x;}
-    ModInt<MOD> friend operator>(ModInt<MOD> a,ModInt<MOD> b){ return a.x > b.x;}
-    ModInt<MOD> friend operator==(ModInt<MOD> a,ModInt<MOD> b){ return a.x == b.x;}
-    friend std::ostream& operator<< (std::ostream& out,ModInt<MOD>& a){ return out << a.x;}
-    friend std::istream& operator>> (std::istream& in, ModInt<MOD>& a){ return  in >> a.x;}
-};
-
-inline ll read(){
-	ll x=0;bool flag=1;char ch=getchar();
-	while(ch<'0'||ch>'9') {if(ch=='-')flag=0;ch=getchar();}
-	while(ch>='0'&&ch<='9') {x=(x<<3)+(x<<1)+ch-'0';ch=getchar();}
-	if(flag) return x;
-	return ~(x-1);
+    if (x > 9) print(x / 10);
+    putchar(x % 10 + '0');
 }
-
+i128 read() {
+    i128 x = 0;
+    char ch = getchar();
+    bool neg = false;
+    if (ch == '-') {
+        neg = true;
+        ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9') {
+        x = x * 10 + ch - '0';
+        ch = getchar();
+    }
+    return neg ? -x : x;
+}
 void solve() {
-	i64 n, m;
-	cin >> n >> m;
-	vector<i64>a(2 * n + 1);
-	for (int i = 1;i <= 2 * n;i++) {
-		cin >> a[i];
-		a[i+n] = a[i];
-	}
-	i64 ans = 0;
-	for (int i = 1;i <= n;i ++) {
-		if (a[i] == 0) {
-			i64 cnt0 = 1;
-			while (a[i + 1] == 0 && i <= n) {
-				i++;
-				cnt0++;
-			}
-			i64 mi = 0;
-			for (int j = i;j <= i + n;j++) {
-				if (mi + 1 <= a[j]) {
-					mi = max(mi,a[j]);
-				} else {
-					break;
-				}
-			}
-			if (mi == m - 1) { ans += cnt0; }
+    // i64 N,M;
+    i128 n,m;
+    n = read();
+    m = read();
+    // print(n);
+    // scanf("%ld %ld",&n,&m);
 
-		}
-	}
-	cout << ans << endl;
-
+    i128 ans = 0;
+    i128 l = 1;
+    i128 t = n;
+    i128 cnt = 1;
+    i128 last = 0;
+    // i128 K = 0;
+    while ( 1 ) {
+        if ( t < m ) {
+            // cout << cnt << '\n';
+            ans += cnt*(l+n)*(n-l+1)/2;
+            break;
+        } else {
+            i128 del = t/m;
+            i128 tur = (t%m+del)/del;
+            i128 b = l-(cnt*del);
+            // i128 k = l-cnt;
+            i128 res = (2*b+del-1)*(cnt+cnt+tur-1)*tur/2;
+            res += 2*del*((cnt+tur-1)*(cnt+tur)*(2*(cnt+tur-1)+1)/6-last);
+            last = (cnt+tur-1)*(cnt+tur)*(2*(cnt+tur-1)+1)/6;
+            ans += res*(del)/2;
+            l += tur*del; 
+            t -= tur*del;
+            cnt += tur;
+            // print(ans);
+            // printf("\n");
+        }
+    }
+    print(ans);
+    printf("\n");
+    // cout << ans << '\n';
+    return;
 }
 
 int main() {
-	// __int128 T;
-	// T = read();
-	// std::ios::sync_with_stdio(false);
-    // std::cin.tie(nullptr);
-     
-    int n, m;
-    std::cin >> n >> m;
- 
-    std::vector<int> a(n);
-    for (auto &x: a) {
-        std::cin >> x;
+    // ios::sync_with_stdio(0);
+    // cin.tie(0), cout.tie(0);
+    int T = 1;
+    // T = read();
+    // cin >> T;
+    while ( T-- ) {
+        solve();
     }
-    a.insert(a.end(), a.begin(), a.end());
- 
-    std::vector<int> pos(m);
-    std::iota(pos.rbegin(), pos.rend(), 2 * n);
- 
-    int ans = 0;
-    for (int i = 2 * n - 2, cnt = m - 1; i >= 0; i--) {
-        int v = a[i];
-        if (v > 0 and pos[v - 1] < pos[v]) {
-            cnt++;
-        }
-        if (v + 1 < m and pos[v] > pos[v + 1]) {
-            cnt--;
-        }
-        if (i < n and cnt == 0) {
-            ans++;
-        }
-        pos[v] = i;
-    }
-    std::cout << ans << "\n";
-     
-	// int T = 1;
-	// while (T--) {
-	// 	solve();
-	// }
-	return 0;
+    return 0;
 }

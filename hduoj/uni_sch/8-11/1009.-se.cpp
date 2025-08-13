@@ -20,9 +20,11 @@ using i128 = __int128_t;
 // 补题——题目链接:https://acm.hdu.edu.cn/contest/problem?cid=1179&pid=1009
 // 网址：https://acm.hdu.edu.cn/contest/view-code?cid=1179&rid=4542&from=rank
 // 2025.08.11——18:35:28
+// 2025.08.11——22:01:03 wa 了？？？？
+// 2025.08.11——23:29:51 accpted 
 /*
  *
- *
+ * 太多小细节了，导致有的地方乘了但是又有的地方没乘导致最后结果不对。。。
  *
 */
 
@@ -54,65 +56,62 @@ namespace fastio{
 
 void solve(){
     i128 n, w;
-    i64 x;
-    std::cin >> x;
-    deb(x);
-    n = x;
-    std::cin >> x;
-    w = x;
-    std::cout << "n   : ";fastio::cout << n;
-    std::cout << endl;
     
-    std::cout << "w   : ";fastio::cout << w;
-    std::cout<< endl;
-    // i128 ans = (i128) (1 + n) * n/2;
-    i128 ans = 0;
-    for (i128 i = n, n2, d, cnt,p = 0;i >= w;i = n2) {
+    fastio::cin >> n >> w;
+    
+    i128 ans = (1 + n) * n;
+    i128 diff = 0;
+
+    for (i128 i = n, n2, l, d, cnt;i >= w;i = n2) {
         d = i / w;
         n2 = i - d;
-        std::cout << "d    : ";fastio::cout << d;
-        std::cout << endl;
-        std::cout << "n2   : ";fastio::cout << n2;
-        std::cout<< endl;
+
         cnt = 1;
+        // i64 dd = d,ww = w;
+        // i64 nn2 = n2;
         if (n2 > d * w - 1) {
-            n2 = (i - n2 + w - 1) / d; 
-            cnt = (i - n2) / d;
+            cnt = i - (w * d) + d;
+            cnt /= d;
+            // cnt = (i - d * w + 1) / d + ((i - d * w + 1) % d != 0);
+            n2 = i - cnt * d;
         }
-        // cnt--;
-        i128 diff = 0;
-        diff += (p + p * p)/ 2;
-        std::cout << "diff : ";fastio::cout << diff;
-        std::cout << endl;
+        
+        
 
-        diff += (cnt * (cnt + 1) * (2 * p + 1))/ 2;
-        std::cout << "diff : ";fastio::cout << diff;
-        std::cout << endl;
-        diff += (cnt * (cnt + 1) * (2 * cnt + 1)) / 6;
-        std::cout << "diff : ";fastio::cout << diff;
-        std::cout << endl;
-        
-        p = p + d * cnt;
-        
-        std::cout << "p    : ";fastio::cout << p;
-        std::cout << endl;
+        ans += cnt * (i128(1) + n) * n;
+        l = n - i;
+        // std::cout << "l    :";fastio::cout << l;
+        // std::cout << endl;
+        // std::cout << "d    :";fastio::cout << d;
+        // std::cout << endl;
+        // std::cout << "cnt  :";fastio::cout << cnt;
+        // std::cout << endl;
+        // std::cout << "n2   :";fastio::cout << n2;
+        // std::cout << endl;
+        diff += (cnt * (cnt + 1) * (d + 2 * d * l)) / 2;
+        diff += (cnt * (cnt + 1) * (2 * cnt + 1) * d * d)/ 6;
+        diff += (l * l + l) * cnt;
+        // std::cout << "diff :";fastio::cout << diff;
+        // std::cout << endl;    
     }
+
+    ans -= diff;
+    ans /= 2;
     fastio::cout << ans;
-    // cout << endl;
-
-
+    std::cout << endl;
 }
 
 int main(){
-    // ios_base::sync_with_stdio(false);
-    // cin.tie(nullptr);
-    // cout.tie(nullptr);
-    i128 T = 1;
-    fastio::cin >> T;
-    std::cout << "T :  ";fastio::cout << T;
-    std::cout << endl;
+    i64 T = 1;
+    std::cin >> T;
     while (T--) {
         solve();
     }
     return 0;
 }
+
+/*
+错误样例：
+647437158128 86262761032
+
+*/

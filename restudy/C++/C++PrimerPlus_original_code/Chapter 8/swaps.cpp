@@ -1,10 +1,9 @@
 // swaps.cpp -- swapping with references and with pointers
 #include <iostream>
-void swapr(int & a, int & b);   // a, b are aliases for ints
-void swapp(int * p, int * q);   // p, q are addresses of ints
+void swapr(int& a, int& b);   // a, b are aliases for ints
+void swapp(int* p, int* q);   // p, q are addresses of ints
 void swapv(int a, int b);       // a, b are new variables
-int main()
-{
+int main() {
     using namespace std;
     int wallet1 = 300;
     int wallet2 = 350;
@@ -27,20 +26,17 @@ int main()
     cout << "wallet1 = $" << wallet1;
     cout << " wallet2 = $" << wallet2 << endl;
     // cin.get();
-    return 0; 
+    return 0;
 }
 
-void swapr(int & a, int & b)    // use references
-{
+void swapr(int& a, int& b)    {// use references
     int temp;
-
     temp = a;       // use a, b for values of variables
     a = b;
     b = temp;
 }
 
-void swapp(int * p, int * q)    // use pointers
-{
+void swapp(int* p, int* q)    {// use pointers
     int temp;
 
     temp = *p;      // use *p, *q for values of variables
@@ -48,11 +44,9 @@ void swapp(int * p, int * q)    // use pointers
     *q = temp;
 }
 
-void swapv(int a, int b)        // try using values
-{
+void swapv(int a, int b){// try using values
     int temp;
-
     temp = a;      // use a, b for values of variables
     a = b;
-    b = temp; 
+    b = temp;
 }
