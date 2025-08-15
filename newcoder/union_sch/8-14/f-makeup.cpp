@@ -124,8 +124,10 @@ void solve() {
             i64 ed = nxt[i];
             if (ed == 0)ed = n;
             add(1, 1, n, i + 1, ed, -1);
-        }else if (nxt[i] && lst[v]) {
-            add(1, 1, n, nxt[i] + 1, lst[v],1);
+            
+        } else if (nxt[i] && lst[v]) {
+            // if()
+            add(1, 1, n, nxt[i] + 1, lst[v], 1);
         }
         Seg res = qry(1, 1, n, i + 1, n);
         if (res.num > ans.num) {
