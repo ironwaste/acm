@@ -19,7 +19,12 @@ using namespace std;
 
 // 补题——题目链接: https://ac.nowcoder.com/acm/contest/108307/F
 // 网址：
-// 2025.08.14——22:28:52
+// 2025.08.14——22:28:52 start
+// 2025.08.14——22:50:23 end
+// 2025.08.15——21:20:32 start
+// 2025.08.15——21:48:19 wa 
+// 2025.08.15——22:06:16 当 答案为0的情况下没进行特判
+
 /*
  *
  *
@@ -36,10 +41,10 @@ i64 tag[N << 2];
 #define rs (p<<1|1)
 
 void up(i64 p) {
-    if (seg[ls].num > seg[rs].num)
-        seg[p] = seg[ls];
-    else
+    if (seg[ls].num < seg[rs].num)
         seg[p] = seg[rs];
+    else
+        seg[p] = seg[ls];
 }
 void pd(i64 p) {
     if (tag[p] != 0) {
@@ -54,10 +59,12 @@ void pd(i64 p) {
     }
 }
 void build(i64 p, i64 s, i64 t) {
+    tag[p] = 0;
     if (s == t) {
         seg[p].num = 0;
         seg[p].id  = s;
         tag[p] = 0;
+        return;
     }
 
     i64 mid = s + ((t - s)>> 1);
@@ -74,11 +81,11 @@ void add(i64 p, i64 s, i64 t, i64 l, i64 r,i64 x) {
     pd(p);
     
     if (l <= mid) add(ls, s, mid, l, r, x);
-    if (r >  mid) add(ls, mid + 1,t, l, r, x);
+    if (r >  mid) add(rs, mid + 1,t, l, r, x);
     up(p);
 }
 
-Seg Max(Seg a, Seg b) { return (a.num > b.num) ? a : b; }
+Seg Max(Seg a, Seg b) { return (a.num < b.num) ? b : a; }
 Seg qry(i64 p, i64 s, i64 t, i64 l, i64 r) {
     if (l <= s && t <= r) {
         return seg[p];
@@ -105,45 +112,46 @@ void solve() {
         cin >> a[i];
         if (mpid.count(a[i])) {
             i64 id = mpid[a[i]];
-            if (nxt[id]) {
-                lst[a[i]] = max(lst[a[i]], (i64)(i));
-            } else {
-                nxt[id] = i;
-            }
+            // 前一个
+            lst[a[i]] = max(lst[a[i]], (i64) (i));
+            nxt[id] = i;
+            
         }
         mpid[a[i]] = i;
+        // de(i);
     }
-    build(1, 1, n);
+    build(1, 1, n );
     i64 ansl = 0;
     Seg ans;
     ans.num = 0, ans.id = 0;
     set<i64>st;
-    for (int i = 1;i <= n;i++) {
+    for (int i = 1;i < n - 1;i++) {
         i64 v = a[i];
-        if (st.count(v)) {
+//         de(i)de(v)
+        if (st.count(v) && nxt[i]) {
             i64 ed = nxt[i];
-            if (ed == 0)ed = n;
-            add(1, 1, n, i + 1, ed, -1);
-            
+            // if (ed == 0)ed = n;
+//             de(ed);
+            if (i + 2 <= ed)
+                add(1, 1, n, i + 2, ed, -1);
         } else if (nxt[i] && lst[v]) {
-            // if()
-            add(1, 1, n, nxt[i] + 1, lst[v], 1);
+//             de(nxt[i])de(lst[v]);
+            if (nxt[i] + 1 <= lst[v])
+                add(1, 1, n, nxt[i] + 1, lst[v], 1);
         }
-        Seg res = qry(1, 1, n, i + 1, n);
+        Seg res = qry(1, 1, n, i + 2, n);
         if (res.num > ans.num) {
             ansl = i + 1;
             ans = Max(ans, res);
         }
+//         de(res.id)de(res.num);
+//         de(ans.id)deb(ans.num);
         st.insert(v);
     }
-
-
+    if (ans.num == 0) {
+        ansl = 2, ans.id = 3;
+    }
     cout << ans.num << endl << ansl << " " << ans.id << endl;
-
-
-
-    
-
 }
 
 int main(){
