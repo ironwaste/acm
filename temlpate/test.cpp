@@ -16,7 +16,7 @@ int main() {
     int a = 1, b = 2, c = 4, d = 11;
 
     
-
+    cout << a << endl;
     // cout << "llong_max is : " << LLONG_MAX << endl;
     // cout << INT_MAX << endl;
     // cout << (2LL << 30) << endl;
