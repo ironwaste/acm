@@ -1,127 +1,114 @@
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <algorithm>
+// 看什么看,以为我厉害吗？
+// 我只是戾气很重,不厉害只需要114514分钟就能变厉害了
+// 而你我的朋友只需要2.5年就可以了
+#include<bits/stdc++.h>
+#include<climits>
 
+
+#define all(x) x.begin(),x.end()
+#define pb(x) push_back(x)
+#define i64 long long
+#define fi first
+#define se second
+
+#define endl '\n'
+#define mod3 998244353
+#define mod7 1000000007
+#define de(x) cerr << #x <<" "<<x <<" ";
+#define deb(x) cerr << #x <<" "<<x <<endl;
 using namespace std;
 
-int n;
-vector<vector<int>> tree;
+using pii = pair<int,int>;
+using pll = pair<i64, i64>;
 
-// 用于找直径：返回最远点和路径
-pair<int, vector<int>> bfs(int start) {
-    vector<int> dist(n, -1);
-    vector<int> parent(n, -1);
-    queue<int> q;
-    q.push(start);
-    dist[start] = 0;
+// 2025.08.28——17:11:27
+/*
+ *
+ *
+ *
+*/
 
-    while (!q.empty()) {
-        int u = q.front(); q.pop();
-        for (int v : tree[u]) {
-            if (dist[v] == -1) {
-                dist[v] = dist[u] + 1;
-                parent[v] = u;
-                q.push(v);
-            }
-        }
-    }
-
-    int farthest = start;
-    for (int i = 0; i < n; ++i) {
-        if (dist[i] > dist[farthest]) {
-            farthest = i;
-        }
-    }
-
-    return {farthest, parent};
-}
-
-int solve() {
+void solve() {
+    i64 n;
     cin >> n;
-    tree.assign(n, vector<int>());
-    vector<int> degree(n, 0);
-
-    for (int i = 0; i < n - 1; ++i) {
-        int u, v;
+    vector<i64>g[n + 1];
+    vector<i64>du(n + 1, 0);
+    for (int i = 1;i < n;i ++) {
+        i64 u,v;
         cin >> u >> v;
-        --u; --v;
-        tree[u].push_back(v);
-        tree[v].push_back(u);
-        degree[u]++;
-        degree[v]++;
+        du[u]++, du[v]++;
+        g[u].push_back(v);
+        g[v].push_back(u);
     }
-
-    // 快速判断是否已经是路径图
-    bool is_path = true;
-    for (int i = 0; i < n; ++i) {
-        if (degree[i] > 2) {
-            is_path = false;
-            break;
-        }
+    i64 ok = 0;
+    for (auto x : du) {
+        if (x > 2)ok = 1;
     }
-
-    if (is_path) {
-        cout << -1 << '\n';
-        return 0;
+    if (!ok) {
+        cout << -1 << endl;
+        return;
     }
+    vector<i64>fa(n + 1, 0), dis(n + 1, 0);
+    i64 faru = 0;
 
-    // 找直径两端点
-    auto [u, _] = bfs(0);
-    auto [v, parent] = bfs(u);
+    auto bfs = [&](i64 st)->void {
+        queue<pll>q;
+        q.push({ st ,0 });
+        i64 c = 0;
 
-    // 构建直径路径
-    vector<int> path;
-    int cur = v;
-    while (cur != -1) {
-        path.push_back(cur);
-        cur = parent[cur];
-    }
-
-    int len = path.size();
-    int midL = (len - 1) / 2;
-    int midR = len / 2;
-
-    // 从中间向两边扩展，找到第一个度数 > 2 的点
-    for (int i = 0; midL - i > 0 || midR + i + 1 < len; ++i) {
-        // 左半边扩展
-        if (midL - i > 0 && midL - i + 1 < len) {
-            int b = path[midL - i];
-            if (degree[b] > 2) {
-                int a = path[midL - i - 1];
-                int c = path[midL - i + 1];
-                // 可选地选择 degree 更大的作为 c
-                if (degree[a] > degree[c]) swap(a, c);
-                cout << a + 1 << " " << b + 1 << " " << c + 1 << '\n';
-                return 0;
+        while (!q.empty()) {
+            auto [u, f] = q.front();
+            q.pop();
+            for (auto v : g[u]) {
+                if (v == f)continue;
+                dis[v] = dis[u] + 1;
+                q.push({ v, u });
+                fa[v] = u;
+                if (dis[v] > dis[c]) { c = v; }
             }
         }
+        faru = c;
+        };
 
-        // 右半边扩展
-        if (midR + i + 1 < len && midR + i - 1 >= 0) {
-            int b = path[midR + i];
-            if (degree[b] > 2) {
-                int a = path[midR + i - 1];
-                int c = path[midR + i + 1];
-                if (degree[a] > degree[c]) swap(a, c);
-                cout << a + 1 << " " << b + 1 << " " << c + 1 << '\n';
-                return 0;
+    bfs(1);
+    // de(faru);
+    fa[faru] = 0;
+    bfs(faru);
+    // deb(faru);
+    vector<i64>path;
+    // for (int i = 0;i <= n;i ++) {
+    //     de(i)deb(fa[i]);
+    // }
+    for (i64 v = faru;v != 0;v = fa[v]) { path.push_back(v); }
+    i64 sz = path.size(),ansc = 0,ansb,ansa;
+    for (int i = 0;i < sz;i ++) {
+        i64 v = path[i];
+        if (du[v] > 2) {
+            ansb = v;
+            for (auto u : g[v]) {
+                if (i + 1 < sz && i-1 >= 0) {
+                    if (u != path[i + 1] && u != path[i - 1]) { ansa = path[i + 1];ansc = u;break; }
+                } else if(i - 1 >= 0 && i + 1>= sz) {
+                    if (u != path[i - 1]) { ansa = path[i - 1];ansc = u;break; }
+                } else if (i - 1 < 0 && i + 1 < sz) {
+                    if (u != path[i + 1] ) { ansa = path[i + 1];ansc = u;break; }
+                }
             }
+            if (ansc)break;
         }
     }
+    cout << ansa << " " << ansb << " " << ansc << endl;
+    
 
-    // 没找到
-    cout << -1 << '\n';
-    return 0;
 }
 
-int main() {
-    ios::sync_with_stdio(false);
+int main(){
+    ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    cout.tie(nullptr);
     int T;
     cin >> T;
-    while (T--) {
+    while(T--){
         solve();
     }
     return 0;
