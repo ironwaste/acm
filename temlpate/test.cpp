@@ -13,10 +13,28 @@ int main() {
     // for (auto x : a) {
     //     cout << x << " ";
     // }
-    int a = 1, b = 2, c = 4, d = 11;
+    int a = 3, b = -2, c = -11, d = -4;
 
-    
-    cout << a << endl;
+
+    cout << a % b << endl;
+    // a = 3 b = -2 ans is 1
+    // a = -1 b = 2 ans is -1
+    // a = -1 b = -2 ans is -1
+    cout << c % d << endl;
+    c = -c;
+    cout << c % d << endl;
+    d = -d;
+    cout << c % d << endl;
+    c = -c;
+    cout << c % d << endl;
+
+    // c = -11 d = -4 ans is -3
+    // c =  11 d = -4 ans is  3
+    // c =  11 d = 4 ans is  3
+    // c = -11 d = 4 ans is -3
+
+    // cout << a << endl;
+
     // cout << "llong_max is : " << LLONG_MAX << endl;
     // cout << INT_MAX << endl;
     // cout << (2LL << 30) << endl;
