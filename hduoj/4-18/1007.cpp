@@ -41,10 +41,12 @@ void solve() {
     cin >> s >> t;
     s--, t--;
     vector<i64>path;
+    i64 kkk = 1;
     auto dfs = [&](auto self, i64 fa, i64 u) ->bool {
         if (u == t) {
             path.pb(u);
             st.insert(u);
+            kkk = u;
             return true;
         }
         for (auto k : g[u]) {
