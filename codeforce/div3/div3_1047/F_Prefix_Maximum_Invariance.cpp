@@ -23,6 +23,7 @@ using pll = pair<i64, i64>;
 
 // 2025.09.11——03:27:51
 // 2025.09.11——03:56:55 accpted
+// https://codeforces.com/contest/2137/problem/F
 /*
  *
  *
@@ -36,7 +37,7 @@ void solve() {
     for (auto& x : a) { cin >> x; }
     for (auto& x : b) { cin >> x; }
     for (int i = n - 1;i >= 0;i--) { mx[i] = max(a[i], b[i]); }
-    priority_queue<pll, vector<pll>, greater<pll>>q;
+    priority_queue<pll>q;
     // 小根堆 小的在上面
     i64 ans = 0;
     for (i64 i = n - 1;i >= 0;i--) {
