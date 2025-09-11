@@ -20,7 +20,7 @@ using namespace std;
 using pii = pair<int, int>;
 using pll = pair<i64, i64>;
 
-// 补题——题目链接:
+// 补题——题目链接: https://www.luogu.com.cn/problem/P5536
 // 网址：
 // 2025.09.09——16:39:58
 /*
@@ -94,24 +94,6 @@ void solve() {
     for (int i = 1;i <= n;i++) { a.push_back(h[i]); }
     sort(all(a), greater<i64>());
     ans = min(ans, a[k]);
-    // } else {
-    //     cen1 = path[sz / 2];
-    //     h[cen1] = 0;
-    //     dfsh(cen1, cen1);
-    //     vector<i64>a;
-    //     for (int i = 1;i <= n;i++) { a.push_back(h[i]); }
-    //     sort(all(a), greater<i64>());
-    //     ans = min(ans, a[k]);
-    // a.clear();
-    // cen2 = path[sz / 2 + 1];
-    // h[cen2] = 0;
-    // dfsh(cen2, cen2);
-    // for (int i = 1;i <= n;i++) { a.push_back(h[i]); }
-    // sort(all(a), greater<i64>());
-    // ans = min(ans, a[k]);
-    // }
-
-
     cout << ans << endl;
 }
 

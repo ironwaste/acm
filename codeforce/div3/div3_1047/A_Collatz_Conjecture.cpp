@@ -1,3 +1,6 @@
+// 看什么看,以为我厉害吗？
+// 我只是戾气很重,不厉害只需要114514分钟就能变厉害了
+// 而你我的朋友只需要2.5年就可以了
 #include<bits/stdc++.h>
 #include<climits>
 
@@ -11,25 +14,31 @@
 #define endl '\n'
 #define mod3 998244353
 #define mod7 1000000007
-#define all(x) x.begin(),x.end()
 #define de(x) cerr << #x <<" "<<x <<" ";
 #define deb(x) cerr << #x <<" "<<x <<endl;
 using namespace std;
 
-
 using pii = pair<int,int>;
 using pll = pair<i64, i64>;
 
-// 补题——题目链接:
-// 网址：
-// 2025.09.09——17:28:17
+// 2025.09.11——02:11:00
 /*
  *
  *
  *
 */
+// i64 pw(i64 a, i64 b) {
+//     i64 res = 1LL;
+//     while()
+// }
 
 void solve(){
+    i64 xx, k;
+    cin >> k >> xx;
+    for (int i = 0;i < k;i++) {
+        xx *= 2LL;
+    }
+    cout << xx << endl;
 
 }
 
@@ -37,7 +46,8 @@ int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     cout.tie(nullptr);
-    int T = 1;
+    int T;
+    cin >> T;
     while(T--){
         solve();
     }

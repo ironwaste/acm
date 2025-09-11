@@ -21,6 +21,8 @@
             "#define deb(x) cerr << #x <<\" \"<<x <<endl;",
             "using namespace std;\n",
 			"",
+			"using pii = pair<int,int>;",
+			"using pll = pair<i64, i64>;\n",
             "// 补题——题目链接:",
             "// 网址：",
             "// ${CURRENT_YEAR}.${CURRENT_MONTH}.${CURRENT_DATE}——${CURRENT_HOUR}:${CURRENT_MINUTE}:${CURRENT_SECOND}",
