@@ -21,26 +21,42 @@ using namespace std;
 using pii = pair<int,int>;
 using pll = pair<i64, i64>;
 
-// 2025.08.12——15:40:27
-/*
+// 2025.07.21——22:24:16
+/*  https://www.luogu.com.cn/problem/P5908
  *
- *
+ * 
  *
 */
-const int mod = 12345;
+
 void solve(){
-    int n;
-    cin >> n;
-    vector<vector<i64> >dp(2, vector<i64>(n + 10, 0));
-    dp[1][1] = 1;
-    dp[0][1] = 8;
-    for (int i = 2;i <= n;i++) {
-        dp[0][i] = dp[1][i - 1] + 9 * dp[0][i - 1];
-        dp[1][i] = 9 * dp[1][i - 1] + dp[0][i - 1];
-        dp[0][i] %= mod;
-        dp[1][i] %= mod;
+    int n, d;
+    cin >> n >> d;
+    vector<vector<i64> >g(n);
+    for (int i = 0;i < n - 1;i ++) {
+        i64 u, v;
+        cin >> u >> v;
+        u--, v--;
+        g[u].push_back(v);
+        g[v].push_back(u);
     }
-    cout << dp[0][n] << endl;
+    i64 ans = 0;
+    queue<pll>q;// 第一个为点，第二个为距离
+    vector<i64>vis(n, 0);
+    vis[0] = 1;
+    q.push({ 0, 0 });
+    while (!q.empty()) {
+        auto [u, dd] = q.front();
+        q.pop();
+        if (d < dd) break;
+        ans++;
+        for (auto v : g[u]) {
+            if (vis[v])continue;
+            // if(d =)
+            q.push({v,dd+1LL});
+            vis[v] = 1;
+        }
+    }
+    cout << ans - 1 << endl; //减去自己即可
 }
 
 int main(){
