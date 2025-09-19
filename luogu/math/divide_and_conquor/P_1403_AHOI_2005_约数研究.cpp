@@ -21,9 +21,22 @@ using namespace std;
 using pii = pair<int,int>;
 using pll = pair<i64, i64>;
 
+// 2025.09.16——14:33:00
+/*
+ *
+ *
+ *
+*/
 
 void solve(){
-
+    i64 n;
+    cin >> n;
+    // vector<i64>
+    i64 ans = 0;
+    for (int i = 1;i <= n;i++) {
+        ans += n / i;
+    }
+    cout << ans << endl;
 }
 
 int main(){
@@ -31,6 +44,7 @@ int main(){
     cin.tie(nullptr);
     cout.tie(nullptr);
     int T = 1;
+    //cin >> T;
     while(T--){
         solve();
     }
