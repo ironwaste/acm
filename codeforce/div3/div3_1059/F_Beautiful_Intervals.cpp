@@ -17,7 +17,7 @@
 using namespace std;
 
 
-using pii = pair<int,int>;
+using pii = pair<int, int>;
 using pll = pair<i64, i64>;
 
 // 补题——题目链接:
@@ -29,85 +29,87 @@ using pll = pair<i64, i64>;
  *
 */
 
-void solve(){
+void solve() {
     i64 n, m;
     cin >> n >> m;
     vector<pll> lr;
-    bool ok = false;
-    for (int i = 0; i < m; i++) {
-        int l, r;
+    vector<i64>a(n + 1, 0), st(n, 0), ed(n, 0);
+    i64 one = -1;
+    for (i64 i = 0;i < m;i++) {
+        i64 l, r;
         cin >> l >> r;
-        lr.push_back({l, r});
-        if (l == 1 && r == n) {
-            ok = true;
-        }
+        l--, r--;
+        // if (l != r) {
+        st[l] = 1;
+        ed[r] = 1;
+        // }
+        // if (l == r) { st[l] = 1, ed[r] = 1; }
+        lr.push_back({ l,r });
+        a[l]++;
+        a[r + 1]--;
     }
-    
-    if (ok) {
-        for (int i = 0; i < n; i++) {
-            cout << i << " ";
-        }
-        cout << endl;
-        return;
+
+    // deb(one);
+    auto prx = a;
+    partial_sum(all(a), prx.begin());
+    i64 ok = -1;
+    for (int i = 0;i < n;i++) {
+        if (prx[i] == m) { ok = i; }
     }
-    
-    vector<int> diff(n + 2, 0);
-    for (auto [l, r] : lr) {
-        diff[l]++;
-        diff[r + 1]--;
-    }
-    
-    vector<bool> vis(n + 1, false);
-    int cur = 0;
-    for (int i = 1; i <= n; i++) {
-        cur += diff[i];
-        vis[i] = (cur > 0);
-    }
-    
-    int idx = -1;
-    for (int i = 1; i <= n; i++) {
-        if (!vis[i]) {
-            idx = i;
-            break;
-        }
-    }
-    
-    if (idx != -1) {
-        vector<int> mex(n);
-        mex[idx - 1] = 0;
-        int num = 1;
-        for (int i = 0; i < n; i++) {
-            if (i != idx - 1) {
-                mex[i] = num++;
+    vector<i64>ans(n, -1);
+    i64 one1 = -1;
+    if (ok == -1) {
+        for (int i = 0;i < n - 1;i++) {
+            if (!ed[i]) {
+                one = i;
+                ans[i + 1] = 1;
+                ans[i] = 0;
+                break;
+            }
+            if (!st[i + 1]) {
+                one1 = i + 1;
+                ans[i + 1] = 0;
+                ans[i] = 1;
+                break;
             }
         }
-        for (int i = 0; i < n; i++) {
-            cout << mex[i] << " ";
+    }
+    i64 mex = 0;
+    if (ok != -1) {
+        ans[ok] = 0;
+        mex = 1;
+        for (int i = 0;i < n && mex < n;i++, mex++) {
+            while (i < n && ans[i] != -1) { i++; }
+            ans[i] = mex;
         }
-        cout << endl;
+    } else if (one != -1 || one1 != -1) {
+        mex = 2;
+        for (int i = 0;i < n && mex < n;i++, mex++) {
+            while (i < n && ans[i] != -1) { i++; }
+            ans[i] = mex;
+        }
+
     } else {
-        vector<int> mex(n);
-        mex[0] = 0;
-        mex[n - 1] = 1;
-        int num = 2;
-        for (int i = 1; i < n - 1; i++) {
-            mex[i] = num++;
+        ans[0] = 0;
+        ans[1] = 2;
+        ans[2] = 1;
+        for (int i = 3;i < n;i++) {
+            ans[i] = i;
         }
-        for (int i = 0; i < n; i++) {
-            cout << mex[i] << " ";
-        }
-        cout << endl;
+    }
+    for (int i = 0;i < n;i++) {
+        cout << ans[i] << " \n"[i == n - 1];
     }
 }
 
 
-int main(){
+int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     cout.tie(nullptr);
     int T = 1;
     cin >> T;
-    while(T--){
+    while (T--) {
         solve();
     }
     return 0;
