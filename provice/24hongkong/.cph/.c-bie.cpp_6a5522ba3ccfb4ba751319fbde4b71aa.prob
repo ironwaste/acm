@@ -1,0 +1,1 @@
+{"name":"Local: c-bie","url":"d:\\vscode\\25_code_acm\\provice\\24hongkong\\c-bie.cpp","tests":[{"id":1762936424432,"input":"3\n1\n5\n2\n1 3\n3\n3 3 3","output":"1\n2\n1 2 3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\vscode\\25_code_acm\\provice\\24hongkong\\c-bie.cpp","group":"local","local":true}
