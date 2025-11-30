@@ -24,10 +24,25 @@ using pll = pair<i64, i64>;
 // 网址：
 // 2025.11.28——23:20:24
 /*
- * 1. i?  -> sum -= 2
+ * 1. I?  -> sum -= 2
  * 2. ?X / ? V -> -1
  * 3. ?? -> iV 4 iX 9
  * 4. ，没有了
+ * 我和答案的思维差别在于， 我对于后续的代码实现 我先根据？ 个数来判断
+ * I V X 分别的个数 而后再贪心的排列组合
+ *
+ * 答案的思路不同 ， 其假设？ 全部为I 的情况下最小（我也是这样想的）
+ * 但是不同的是其将其 所有的 I 直接预设到 其中
+ * 而后再更换  V 其中 最关键的部分在于 替换 I 成为 V 的顺序
+ *
+ * 1、 增加 IV 对的数量 因为 这样     2 -> 4  + 2
+ * 2、 不改变IV的数量  如 IIV -> IVV   5->9  + 4
+ * 3、 减少 IV 数量                         + 6
+ *
+ * 等待 更改完成 V 之后 再更改 X 的话 就无需考虑了，
+ * 换句话说 更改完 X + V 的情况后 就无所谓了 直接对于最后所需的X 值进行
+ * 相加即可
+ * V 更改成为 X 只在数值上更改了 +5
 */
 
 void solve() {
@@ -35,94 +50,57 @@ void solve() {
     cin >> n >> q;
     string s;
     cin >> s;
-    vector<i64>v(n + 1, 0);
-    i64 num = 0, pre = 0, suf = 0, sufxv = 0;
-    i64 ans = 0,sufxx = 0;
-    vector<i64>xvsuf, preI, toget;
-    vector<bool>vis(n, false);
-    i64 mx = 0;
-    for (int i = 0;i < n;i++) {
-        char c = s[i];
-        if (c == '?') { v[i + 1] = v[i] + 1; }
-    }
-    for (int j = n;j >= 0;j--) {
-        if (v[j] == 0) { mx = 0;continue; }
-        if (v[j] < mx) { v[j] = mx; } else { mx = v[j]; }
-    }
-    for (int i = 0;i < n;i++) {
-        char c = s[i];
-        if (c == '?') { num++; } else {
-            if (s[i] == 'I' && i + 1 < n && (s[i + 1] == 'V' || s[i + 1] == 'X')) {
-                ans--;
-            } else if (s[i] == 'I') {
-                ans++;
-            } else if (s[i] == 'X') {
-                ans += 10;
-            } else {
-                ans += 5;
-            }
-        }
-        if (c == '?' && i - 1 >= 0 && s[i - 1] == 'I') {
-            i64 idx = i + v[i + 1];
-            if (s[idx] == 'X' || s[idx] == 'V') {
-                toget.push_back(v[i + 1]);
-                vis[idx] = true;
-                continue;
-            }
-            pre++;
-            preI.push_back(v[i + 1]);
-        } else if (c == '?' && i + 1 < n && (s[i + 1] == 'X' || s[i + 1] == 'V')) {
-            if (vis[i]) { continue; }
-            sufxv++;
-            if (v[i + 1] % 2 == 1) { sufxo++; }
-            xvsuf.push_back(v[i + 1]);
+    i64 ans = 0;
+    for (auto& c : s) {
+        if (c == 'X') {
+            c = 'V';
+            ans += 10;
+        } else if (c == 'V') {
+            ans += 5;
+        } else {
+            ans += 1;
         }
     }
-    sort(all(preI), [&](auto i, auto j) {
-        if (i % 2 != j % 2) { return i % 2 == 1; }
-        return i < j;
-        });
-    sort(all(xvsuf), [&](auto i, auto j) {
-        if (i % 2 != j % 2) { return i % 2 == 1; }
-        return i < j;
-        });
-    sort(all(toget), [&](auto i, auto j) {
-        if (i % 2 != j % 2) { return i % 2 == 1; }
-        return i < j;
-        });
-    i64 szI = preI.size();
-    i64 sufx = xvsuf.size();
-    i64 szt = toget.size();
-    i64 cx, cv, ci;
+    i64 inc = 0, same = 0, num = 0;
+    for (int i = 0, r = 0;i < n;i++) {
+        if (s[i] != '?') { continue; }
+        r = i;
+        int len = 0;
+        while (r < n && s[r] == '?') { r++; }
+        len = r - i;
+        if (i - 1 >= 0 && s[i - 1] == 'I') { len++; }
+        if (r < n && s[r] == 'V') { inc--;len++; }
+        same += len % 2;
+        inc += len / 2;
+        num += r - i;
+        i = r - 1;
+    }
+
+
+    for (int i = 0;i < n;i++) {
+        if (s[i] == '?') { s[i] = 'I'; }
+        if (s[i] == 'I' && i + 1 < n && s[i + 1] == 'V') { ans -= 2; }
+    }
+
     while (q--) {
+        i64 cx, cv, ci;
         cin >> cx >> cv >> ci;
-        if (num <= ci) {
-            cout << ans + num - (sufxv * 2LL) << endl;
-            continue;
-        }
+        if (ci >= num) { cout << ans << endl; continue; }
+
+        i64 need = num - ci;
+        i64 nv = min(need, cv);
+        i64 nx = max(0LL, need - nv);
 
         i64 tmpans = ans;
-        i64 cnt1 = ci;
-        i64 res = num - ci;
-        i64 tmpnum = num;
-        i64 cnt5 = min(res, cv);
-        i64 cnt10 = res - cnt5;
-
-        tmpans += cnt1 * 1LL;
-        tmpans += cnt5 * 5LL;
-        tmpans += cnt10 * 10LL;
-        // 不知道有多少个前后相链接的 
-        // 最多产生多少个 -1呗  cnt个 * -2 为答案呗
-        /*
-        策略 ： 先算 自己可以组多少个 ，然后移位计算呢
-        */
-        i64 ne = min(res, cnt1);
-        
-
-
-
-
+        tmpans += min(need, inc) * 2LL;
+        need = max(need - inc, 0LL);
+        tmpans += min(same, need) * 4LL;
+        need = max(need - same, 0LL);
+        tmpans += need * 6LL;
+        tmpans += 5LL * nx;
+        cout << tmpans << endl;
     }
+    return;
 }
 
 int main() {
@@ -132,85 +110,8 @@ int main() {
     int T = 1;
     cin >> T;
     while (T--) {
-        deb(T)
+        // deb(T)
         solve();
-    }
-    return 0;
-}
-
-//-----------------------
-#include <bits/stdc++.h>
-using namespace std;
-
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-    int t;
-    cin >> t;
-    for (int test = 0; test < t; test++) {
-        int n, q;
-        cin >> n >> q;
-        string s;
-        cin >> s;
-        long long fixed_x = 0, fixed_v = 0, fixed_i = 0, mm = 0;
-        long long nsub = 0;
-        for (int j = 0; j < n; j++) {
-            char c = s[j];
-            if (c == 'X') fixed_x++;
-            else if (c == 'V') fixed_v++;
-            else if (c == 'I') fixed_i++;
-            else mm++;
-            if (j < n - 1) {
-                bool lpot = (c == 'I' || c == '?');
-                char nr = s[j + 1];
-                bool rxv = (nr == 'X' || nr == 'V');
-                if (lpot && rxv) nsub++;
-            }
-        }
-        long long bval = 10 * fixed_x + 5 * fixed_v + 1 * (fixed_i + mm) - 2 * nsub;
-        long long tp1 = 0, tz = 0;
-        int jj = 0;
-        while (jj < n) {
-            if (s[jj] != '?') {
-                jj++;
-                continue;
-            }
-            int st = jj;
-            while (jj < n && s[jj] == '?') jj++;
-            int le = jj - st;
-            int lb = (st == 0 ? 0 : (s[st - 1] == 'I' ? 1 : 0));
-            int rp = (jj == n ? 0 : (s[jj] == 'X' || s[jj] == 'V' ? 1 : 0));
-            int nsubt = 0;
-            if (lb == 0) nsubt++;
-            if (rp == 1) nsubt++;
-            long long hh = le - nsubt;
-            long long p1r = (hh + 1) / 2;
-            tp1 += p1r;
-            if (hh >= 0 && (hh % 2 == 0)) tz++;
-        }
-        for (int qq = 0; qq < q; qq++) {
-            int cx, cvv, cii;
-            cin >> cx >> cvv >> cii;
-            long long fcd = max(0LL, mm - (long long)cii);
-            if (fcd == 0) {
-                cout << bval << '\n';
-                continue;
-            }
-            long long dnum = 0;
-            long long rrem = fcd;
-            if (rrem <= tp1) {
-                dnum = rrem;
-            } else {
-                dnum = tp1;
-                rrem -= tp1;
-                long long zus = min(rrem, tz);
-                rrem -= zus;
-                dnum -= rrem;
-            }
-            long long eb = 4LL * min(fcd, (long long)cvv) + 9LL * max(0LL, fcd - (long long)cvv);
-            long long anss = bval + eb - 2 * dnum;
-            cout << anss << '\n';
-        }
     }
     return 0;
 }
