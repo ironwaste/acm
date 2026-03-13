@@ -1,0 +1,1 @@
+{"name":"Local: b","url":"d:\\vscode\\25_code_acm\\provice\\23jn\\b.cpp","tests":[{"id":1763553054987,"input":"5 3 2\n2 5 1\n1 4 3","output":""},{"id":1763558457757,"input":"","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\vscode\\25_code_acm\\provice\\23jn\\b.cpp","group":"local","local":true}
